@@ -19,6 +19,7 @@ module.exports = function(grunt) {
     data.groupId = data.groupId.replace(/\./g, '/'); // dots to slashes
     data.baseUrl = data.baseUrl.replace(/\/?$/, ''); // remove trailing slash
     data.path = data.path.replace(/\/?$/, '');       // remove trailing slash
+    data.nameAppend = data.nameAppend || '';          // ensure nameAppend is set
     if (data.extension.match(/^[^\.]/)) {            // ensure extension starts with a dot
       data.extension = '.' + data.extension;
     }
@@ -35,7 +36,7 @@ module.exports = function(grunt) {
         id: dependency,
         version: data.dependencies[dependency]
       };
-      var file = artifact.id + '-' + artifact.version + data.extension;
+      var file = artifact.id + '-' + artifact.version + data.nameAppend + data.extension;
       var uri = data.baseUrl + '/' + data.repository + '/' + data.groupId + '/' + artifact.id + '/' + artifact.version + '/' + file;
       var dir = data.path + '/' + artifact.id;
       var tempPath = temp.path({prefix: 'grunt-nexus-', suffix: data.extension});
