@@ -1,5 +1,4 @@
-var zlib = require('zlib');
-var tar  = require('tar');
+var unzip = require('node-unzip-2');
 var fs   = require('fs');
 var q    = require('q');
 
@@ -13,13 +12,9 @@ module.exports = function(archive, dir) {
   .on('error', function(e) {
     deferred.reject({ when: 'reading archive', message: e.message });
   })
-  .pipe(zlib.createGunzip())
+  .pipe(unzip.Extract({ path: dir }))
   .on('error', function(e) {
     deferred.reject({ when: 'gunzipping', message: e.message });
-  })
-  .pipe(tar.Extract({ path: dir }))
-  .on("error", function(e) {
-    deferred.reject({ when: 'untaring', message: e.message });
   })
   .on("close", function() {
     deferred.resolve();
