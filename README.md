@@ -1,6 +1,4 @@
-# grunt-nexus v2.0.x [![Build Status](https://travis-ci.org/SNCF-SIV/grunt-nexus.svg?branch=master)](https://travis-ci.org/SNCF-SIV/grunt-nexus)
-
-> A plugin for downloading tarballed artifacts from Sonatype's Nexus repository.  
+> A plugin for downloading zipped artifacts from Sonatype's Nexus repository.  
 > Tested under Linux and Windows.
 
 # Note
@@ -34,7 +32,9 @@ grunt.initConfig({
       baseUrl:    'http://ic.yourcompany.com/nexus/content/repositories',
       repository: 'web',
       groupId:    'com.yourcompany.components.web',
-      path:       'src/main/components'
+      path:       'src/main/components',
+      nameAppend: '-compressed',
+      extension:  '.zip'
     },
     runtime: {
       dependencies: {
@@ -85,6 +85,11 @@ Type: `String`
 
 The directory where artifacts will be extracted to.
 
+#### nameAppend
+Type: `String`
+
+A name appended to the artifact just before the extension.
+
 #### extension
 Type: `String`
 Default value: `.tar.gz`
@@ -107,7 +112,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 [![devDependency Status](https://david-dm.org/SNCF-SIV/grunt-nexus/dev-status.svg)](https://david-dm.org/SNCF-SIV/grunt-nexus#info=devDependencies)
 
 ## Release History
- * 2016-01-12   v2.0.3   Fixing issue with `strictSSL`. 
+ * 2016-12-22   v2.1.0   Forked, tarball replaced with zip, option nameAppend added.
+ * 2016-01-12   v2.0.3   Fixing issue with `strictSSL`.
  * 2016-01-11   v2.0.2   Added support for `strictSSL` option
  * 2014-11-24   v2.0.1   Improved the extension option to be more robust.
  * 2014-08-28   v2.0.0   First public release.
