@@ -9,8 +9,9 @@ exports.nexus = {
   },
 
   runtimeOptions: function(test) {
+      console.log(1);
     test.expect(2);
-    
+
     test.equal(
       grunt.file.read('src/main/components/a-fake-component/file'),
       grunt.file.read('test/expected/a-fake-component/file'),

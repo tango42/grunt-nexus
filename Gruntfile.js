@@ -24,7 +24,9 @@ module.exports = function(grunt) {
         baseUrl:    'http://ic.yourcompany.com/nexus/content/repositories',
         repository: 'web',
         groupId:    'com.yourcompany.components.web',
-        path:       'src/main/components'
+        path:       'src/main/components',
+        nameAppend: '-compressed',
+        extension:  '.zip',
       },
       runtime: {
         dependencies: {
@@ -35,7 +37,7 @@ module.exports = function(grunt) {
       buildtime: {
         options: {
           path: 'src/test/components',
-          extension: '.tgz'
+          extension: '.zip'
         },
         dependencies: {
           'yet-another-fake-component': '0.1.2'
@@ -43,7 +45,7 @@ module.exports = function(grunt) {
       },
       anotherTarget: {
         options: {
-          extension: 'tgz'
+          extension: 'zip'
         },
         dependencies: {
           'nth-fake-component': '0.1.0'
@@ -71,18 +73,18 @@ module.exports = function(grunt) {
 
   grunt.registerTask('mockNexus', "Setup HTTP mocks", function() {
     require('nock')('http://ic.yourcompany.com')
-    
-    .get('/nexus/content/repositories/web/com/yourcompany/components/web/a-fake-component/1.0.0/a-fake-component-1.0.0.tar.gz')
-    .replyWithFile(200, __dirname + '/test/fixtures/a-fake-component-1.0.0.tar.gz')
-    
-    .get('/nexus/content/repositories/web/com/yourcompany/components/web/another-fake-component/1.2.3/another-fake-component-1.2.3.tar.gz')
-    .replyWithFile(200, __dirname + '/test/fixtures/another-fake-component-1.2.3.tar.gz')
-    
-    .get('/nexus/content/repositories/web/com/yourcompany/components/web/yet-another-fake-component/0.1.2/yet-another-fake-component-0.1.2.tgz')
-    .replyWithFile(200, __dirname + '/test/fixtures/yet-another-fake-component-0.1.2.tgz')
 
-    .get('/nexus/content/repositories/web/com/yourcompany/components/web/nth-fake-component/0.1.0/nth-fake-component-0.1.0.tgz')
-    .replyWithFile(200, __dirname + '/test/fixtures/nth-fake-component-0.1.0.tgz');
+    .get('/nexus/content/repositories/web/com/yourcompany/components/web/a-fake-component/1.0.0/a-fake-component-1.0.0-compressed.zip')
+    .replyWithFile(200, __dirname + '/test/fixtures/a-fake-component-1.0.0-compressed.zip')
+
+    .get('/nexus/content/repositories/web/com/yourcompany/components/web/another-fake-component/1.2.3/another-fake-component-1.2.3-compressed.zip')
+    .replyWithFile(200, __dirname + '/test/fixtures/another-fake-component-1.2.3-compressed.zip')
+
+    .get('/nexus/content/repositories/web/com/yourcompany/components/web/yet-another-fake-component/0.1.2/yet-another-fake-component-0.1.2-compressed.zip')
+    .replyWithFile(200, __dirname + '/test/fixtures/yet-another-fake-component-0.1.2-compressed.zip')
+
+    .get('/nexus/content/repositories/web/com/yourcompany/components/web/nth-fake-component/0.1.0/nth-fake-component-0.1.0-compressed.zip')
+    .replyWithFile(200, __dirname + '/test/fixtures/nth-fake-component-0.1.0-compressed.zip');
 
     grunt.log.ok('Mocked URLs registered');
   });
